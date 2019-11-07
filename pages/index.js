@@ -3,6 +3,7 @@ import Head from "next/head";
 import Emoji from "../components/Emoji";
 import Button from "../components/Button";
 import Prompt from "../components/Prompt";
+import { NextSeo } from "next-seo";
 
 function getRandomEmoji() {
   const es = [
@@ -26,10 +27,10 @@ function getRandomEmoji() {
 const Home = () => {
   const [prompt, setPrompt] = useState();
 
-  const bookNow = () => {
+  const bookNow = (offering, productUrl) => () => {
     setPrompt({
       title: "Before booking",
-      action: 'Book time',
+      action: "Book time",
       description:
         "You will be prompted to find a time that works for you. Then you will be redirected to payment. If you book at time and do not pay I will cancel your meeting.",
       progress() {
@@ -39,11 +40,19 @@ const Home = () => {
 
         setPrompt({
           title: "Did you book a time?",
-          action: 'Pay now',
+          action: "Pay now",
           description:
             "Did you find a time that works for you? If not go ahead and cancel , otherwise continue to payment.",
           progress() {
-            window.open("https://google.com");
+            window.open(productUrl);
+
+            setPrompt({
+              title: "Thanks for booking!",
+              description: `Looking forward to ${offering}! If you have any questions or want to cancel, just send me and email er.adamski@gmail.com. I'd be happy to help!`,
+              progress() {
+                setPrompt();
+              }
+            });
           }
         });
       }
@@ -52,8 +61,29 @@ const Home = () => {
 
   return (
     <div>
+      <NextSeo
+        title={`${getRandomEmoji()} Eric Adamski`}
+        description="Eric wants to help you be a better developer! You can book some of his time for code review, or just a phone call. He would love to talk with you and help in any way possible!"
+        openGraph={{
+          url: "https://www.url.ie/a",
+          title: "Open Graph Title",
+          description: "Open Graph Description",
+          images: [
+            {
+              url: "https://files-htr0omzni.now.sh/Adamski_ColourReg%20(3).jpg",
+              width: 3072,
+              height: 4608,
+              alt: "A picture of Eric Adamski's face"
+            }
+          ],
+          site_name: `${getRandomEmoji()} Eric Adamski`
+        }}
+        twitter={{
+          handle: "@zealigan",
+          cardType: "summary_large_image"
+        }}
+      />
       <Head>
-        <title>{getRandomEmoji()} Eric Adamski</title>
         <link
           href="https://assets.calendly.com/assets/external/widget.css"
           rel="stylesheet"
@@ -69,18 +99,39 @@ const Home = () => {
             <h1 className="title">
               <Emoji alt="wave">{getRandomEmoji()}</Emoji> Hello.
             </h1>
-            <h3 className="subtitle">
+            <p className="subtitle">
               My name is <a href="https://twitter.com/zealigan">Eric Adamski</a>
               . I am a software developer focused on the Web, usually fullstack
               and I am here to help you become a better developer.
-            </h3>
+              <br />
+              <br />
+              Here are somethings I am doing that you might be interested in:
+              <ul>
+                <li>
+                  <a href="https://dev.to/ericadamski">Blogging on dev.to</a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/zealigan">Tweeting on Twitter</a>{" "}
+                  <Emoji alt="eye roll">🙄</Emoji>
+                </li>
+                <li>
+                  <a href="https://twitch.tv/ericadamski">
+                    {" "}
+                    Streaming on Twitch
+                  </a>
+                </li>
+                <li>
+                  <a href="https://flawk.to">Building Flawk.to</a>
+                </li>
+              </ul>
+            </p>
           </div>
           <div className="page__cards">
             <div className="card">
               <div className="card__details">
                 <div className="card__price">$25</div>
-                <h3 className="title">Career coaching call</h3>
-                <p clasName="card__description">
+                <h3 className="title">Call me</h3>
+                <p className="card__description">
                   We can talk about advancing your career, what courses to take,
                   what languages to learn, look at your CV or do some code
                   review. It's your time.
@@ -89,15 +140,22 @@ const Home = () => {
               <ul className="card__features">
                 <li className="card__feature">1 hour</li>
                 <li className="card__feature">No schedule</li>
-                <li className="card__feature">ds</li>
+                <li className="card__feature">Ask anything you want</li>
               </ul>
-              <Button onClick={bookNow}>Book now</Button>
+              <Button
+                onClick={bookNow(
+                  "chatting with you",
+                  "https://app.tillypay.com/pay/0nz73k6"
+                )}
+              >
+                Book now
+              </Button>
             </div>
             <div className="card">
               <div className="card__details">
                 <div className="card__price">$50</div>
                 <h3 className="title">Pair Programming</h3>
-                <p clasName="card__description">
+                <p className="card__description">
                   Need an extra hand on a project, need some help with a
                   problem, or want to learn by doing. You can program with me on
                   whatever problem you choose.
@@ -105,27 +163,84 @@ const Home = () => {
               </div>
               <ul className="card__features">
                 <li className="card__feature">1 hour</li>
+                <li className="card__feature">Learn something new</li>
+                <li className="card__feature">Help with a difficult problem</li>
               </ul>
-              <Button> Book now </Button>
+              <Button
+                onClick={bookNow(
+                  "pair programming with you",
+                  "https://app.tillypay.com/pay/9f3ef155"
+                )}
+              >
+                {" "}
+                Book now{" "}
+              </Button>
             </div>
             <div className="card">
               <div className="card__details">
                 <div className="card__price">$75</div>
-                <h3 className="title">Detailed code review</h3>
-                <p clasName="card__description">
-                  Want some feedback on a code base? I will go through and give
-                  a detailed review of the code of your choice. Along with the
-                  review will be a detailed written document that outlines
-                  potential improvements or places to grow and the tools that
-                  can be used to achieve that growth.
+                <h3 className="title">Code review</h3>
+                <p className="card__description">
+                  I will go through and give a detailed review of the code of
+                  your choice. I will deliver detailed document that outlines
+                  places to improve and grow.
                 </p>
               </div>
               <ul className="card__features">
-                <li className="card__feature">asd</li>
+                <li className="card__feature">Detailed report</li>
+                <li className="card__feature">Tool suggestions</li>
+                <li className="card__feature">Achitecture suggestions</li>
               </ul>
-              <Button> Book now </Button>
+              <Button
+                onClick={bookNow(
+                  "understanding more about your code",
+                  "https://app.tillypay.com/pay/4ae76fd6"
+                )}
+              >
+                {" "}
+                Book now{" "}
+              </Button>
             </div>
           </div>
+        </div>
+        <div className="interest">
+          <h2 className="title" style={{ fontSize: "2rem" }}>
+            Interested in a site like this for yourself?
+          </h2>
+          <p className="subtitle">
+            I would like to create a community that helps developers get paid to
+            share and help others learn. I am collecting emails from people who
+            are interested. Get notified when I reach 100 interested people -
+            and get early access to the product that results.
+          </p>
+          <form
+            style={{
+              width: "100%"
+            }}
+            action="https://buttondown.email/api/emails/embed-subscribe/findadev"
+            method="post"
+            target="popupwindow"
+            onSubmit={() =>
+              window.open("https://buttondown.email/findadev", "popupwindow")
+            }
+            className="embeddable-buttondown-form center"
+          >
+            <div className="sub">
+              <input
+                type="email"
+                name="email"
+                id="bd-email"
+                placeholder="Enter email"
+              />
+              <input type="hidden" value="1" name="embed" />
+              <input type="submit" value="Subscribe" />
+            </div>
+            <p className="subtitle">
+              <a href="https://buttondown.email" target="_blank">
+                Powered by Buttondown.
+              </a>
+            </p>
+          </form>
         </div>
       </div>
       {prompt && (
@@ -137,12 +252,54 @@ const Home = () => {
               <Button secondary onClick={() => setPrompt()}>
                 Cancel
               </Button>
-              <Button onClick={prompt.progress}>{prompt.action || 'Ok'}</Button>
+              <Button onClick={prompt.progress}>{prompt.action || "Ok"}</Button>
             </div>
           </div>
         </Prompt>
       )}
       <style jsx>{`
+        .sub {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          margin: 1rem 0;
+        }
+
+        .sub input[type="submit"] {
+          border: 2px solid var(--black);
+          box-shadow: none;
+          border-radius: var(--border-radius);
+          height: 3rem;
+          border-bottom-left-radius: 0;
+          border-top-left-radius: 0;
+          border-left: none;
+          font-size: 1rem;
+          font-weight: bold;
+          padding: 0 1rem;
+        }
+
+        .sub input[type="email"] {
+          flex-grow: 1;
+          font-size: 1rem;
+          max-width: 400px;
+          border: 2px solid var(--black);
+          box-shadow: none;
+          border-radius: var(--border-radius);
+          height: 3rem;
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+          padding: 0.5rem 1rem;
+        }
+
+        .interest {
+          padding: 1rem;
+        }
+
+        .interest .subtitle {
+          padding: 1rem 0;
+        }
+
         .prompt-container {
           display: flex;
           flex-direction: column;
@@ -193,6 +350,7 @@ const Home = () => {
 
         .card__features {
           flex-grow: 1;
+          margin-bottom: 2rem;
         }
 
         .card__price {
@@ -213,10 +371,12 @@ const Home = () => {
         }
 
         .page__details {
-          padding: 0 1rem;
+          padding: 1rem;
+          padding-bottom: 0;
         }
 
-        .page__container {
+        .page__container,
+        .interest {
           max-width: 1000px;
         }
 

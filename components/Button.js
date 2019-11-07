@@ -16,10 +16,7 @@ export default function Button(props) {
           border-radius: var(--border-radius);
           border: 2px solid transparent;
           transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
-        }
-
-        .button:nth-child(n + 2) {
-          margin-left: 0.5rem
+          margin: 0 0.5rem;
         }
 
         .button--secondary {
