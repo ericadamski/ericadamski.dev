@@ -65,9 +65,9 @@ const Home = () => {
         title={`${getRandomEmoji()} Eric Adamski`}
         description="Eric wants to help you be a better developer! You can book some of his time for code review, or just a phone call. He would love to talk with you and help in any way possible!"
         openGraph={{
-          url: "https://www.url.ie/a",
-          title: "Open Graph Title",
-          description: "Open Graph Description",
+          url: "https://ericadamski.dev",
+          title: `${getRandomEmoji()} Eric Adamski`,
+          description: "Eric wants to help you be a better developer! You can book some of his time for code review, or just a phone call. He would love to talk with you and help in any way possible!",
           images: [
             {
               url: "https://files-htr0omzni.now.sh/Adamski_ColourReg%20(3).jpg",
